@@ -70,9 +70,12 @@ Karena minggu ini belum terlalu banyak mengoding dan saya masih pemula dalam pem
 Strategi prompting yang saya gunakan adalah: 
 - Sebelum mengerjakan tugas, saya mengirimkan file Dart yang telah dibuat di Tutorial, lalu meminta AI untuk menjelaskan arti dari tiap baris kodingan dan juga mengapa baris tersebut ada di tempat tertentu.
 - Lalu setelah dijelaskan, saya mengecek pemahaman saya dengan menyampaikan pemahaman saya, lalu meminta AI untuk mengecek kebenaran pernyataan tersebut. 
+- Saya juga melakukan pengecekan README yang telah saya kerjakan: apakah sudah aman untuk dikumpulkan atau tidak.
 
 ### Kekurangan AI: 
 Untuk minggu ini, mungkin tidak dapat begitu ditemukan. AI cukup jelas dalam menjelaskan konsep dan kodingan tutorial.
 
-Untuk selengkapnya dapat dilihat di: https://share.gemini.google/hCLzQAQSv6RD
+Untuk selengkapnya dapat dilihat di: 
+- https://share.gemini.google/0Xq0sNi9xMDR
+- https://share.gemini.google/hCLzQAQSv6RD
 </div>
