@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'MyPortfolio',
+      title: 'MyPortofolio',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -31,10 +31,23 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.indigo,
+          brightness: Brightness.light,
           secondary: Colors.amber[700],
         ),
         useMaterial3: true,
       ),
+
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.indigo,
+          brightness: Brightness.dark,
+          secondary: Colors.amber[700],
+        ),
+        useMaterial3: true,
+      ),
+
+      themeMode: ThemeMode.system,
+      
       home: MyHomePage(),
     );
   }
