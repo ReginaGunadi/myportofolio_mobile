@@ -22,6 +22,7 @@ samples, guidance on mobile development, and a full API reference.
 1. Hampir seluruh tampilan yang ada pada Flutter adalah sebuah widget. Widget tree pada Flutter adalah suatu struktur pohon yang menggambarkan struktur hierarki antar widget yang ada. Hubungan induk anak (parent-child) dapat ditentukan dengan melihat apakah suatu widget berada dalam widget lain. Contoh: widget A berada dalam widget B, berarti widget A merupakan child dan widget B adalah parentnya. Atau misal pada proyek myportofolio_mobile ini, Text merupakan anak dari Column. Bila anaknya hanya satu maka dapat ditulis child: ..., bila anaknya banyak maka dapat ditulis children: [...]. Parent memberikan batasan yang harus ditaati oleh childnya. Widget di bawah suatu parent akan mewarisi tema dan gaya teks leluhurnya di widget tree, bila tidak ditentukan sendiri.
 
 2. Seluruh widget yang digunakan dalam proyek ini dan fungsinya adalah:
+
 Pada main.dart:  
 - MyApp: widget untuk membangun MaterialApp.
 - MaterialApp: widget yang mengatur judul, tema warna, dan halaman awal aplikasi.
