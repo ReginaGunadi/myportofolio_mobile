@@ -23,29 +23,29 @@ samples, guidance on mobile development, and a full API reference.
 
 2. Seluruh widget yang digunakan dalam proyek ini dan fungsinya adalah:
 
-Pada main.dart:  
-- MyApp: widget untuk membangun MaterialApp.
-- MaterialApp: widget yang mengatur judul, tema warna, dan halaman awal aplikasi.
+- Pada main.dart:  
+    - MyApp: widget untuk membangun MaterialApp.
+    - MaterialApp: widget yang mengatur judul, tema warna, dan halaman awal aplikasi.
 
-Pada menu.dart: 
-- MyHomePage: widget halaman utama yang menampilkan seluruh tampilan menu.
-- Scaffold: kerangka dasar halaman yang terdiri dari komponen AppBar, body, dan SnackBar.
-- AppBar: judul di bagian atas halaman aplikasi (untuk menampilkan tulisan MyPortfolio).
-- Padding: memberi jarak kosong di sekitar child.
-- Column: menyusun child dalam posisi kolom.
-- Row: menyusun child dalam posisi baris.
-- Center: menempatkan child di tengah.
-- SizedBox: memberi jarak kosong antara suatu widget dengan widget lainnya.
-- GridView.count: menampilkan child dalam suatu kolom dengan ukuran tetap.
-- InfoCard: untuk menampilkan informasi NPM, nama, dan kelas.
-- Card: kartu dengan border tidak tajam dan efek bayangan.
-- Container: kotak untuk mengatur ukuran dan padding.
-- ItemCard: untuk tombol menu.
-- Material: menyediakan tempat dimana efek sentuh dari widget InkWell muncul.
-- InkWell: mendeteksi sentuhan pada kartu aksi dan memberikan efek tampilan tertentu.
-- Icon: menampilkan ikon pada tombol menu.
-- Text: menampilkan tulisan.
-- SnackBar: pesan singkat di bagian bawah aplikasi saat tombol ditekan.
+- Pada menu.dart: 
+    - MyHomePage: widget halaman utama yang menampilkan seluruh tampilan menu.
+    - Scaffold: kerangka dasar halaman yang terdiri dari komponen AppBar, body, dan SnackBar.
+    - AppBar: judul di bagian atas halaman aplikasi (untuk menampilkan tulisan MyPortfolio).
+    - Padding: memberi jarak kosong di sekitar child.
+    - Column: menyusun child dalam posisi kolom.
+    - Row: menyusun child dalam posisi baris.
+    - Center: menempatkan child di tengah.
+    - SizedBox: memberi jarak kosong antara suatu widget dengan widget lainnya.
+    - GridView.count: menampilkan child dalam suatu kolom dengan ukuran tetap.
+    - InfoCard: untuk menampilkan informasi NPM, nama, dan kelas.
+    - Card: kartu dengan border tidak tajam dan efek bayangan.
+    - Container: kotak untuk mengatur ukuran dan padding.
+    - ItemCard: untuk tombol menu.
+    - Material: menyediakan tempat dimana efek sentuh dari widget InkWell muncul.
+    - InkWell: mendeteksi sentuhan pada kartu aksi dan memberikan efek tampilan tertentu.
+    - Icon: menampilkan ikon pada tombol menu.
+    - Text: menampilkan tulisan.
+    - SnackBar: pesan singkat di bagian bawah aplikasi saat tombol ditekan.
 
 3. Fungsi dari widget MaterialApp adalah mengatur judul, tema warna, halaman awal, dan navigasi antar halaman aplikasi. Widget ini umumnya digunakan sebagai root widget karena widget-widget di bawahnya membutuhkan hal-hal tersebut (contoh: butuh warna tema yang sama), sehingga MaterialApp harus ada di root agar bisa diakses seluruh widget. 
 
