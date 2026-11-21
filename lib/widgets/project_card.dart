@@ -1,10 +1,12 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:myportofolio_mobile/screens/project_form.dart';
+import 'package:myportofolio_mobile/screens/experience_form.dart';
 
 final List<ItemHomepage> items = [
   ItemHomepage("Lihat Proyek", Icons.folder, Colors.indigo),
   ItemHomepage("Tambah Proyek", Icons.add_circle, Colors.indigoAccent),
-  ItemHomepage("Logout", Icons.logout, Colors.lightBlue),
+  ItemHomepage("Tambah Pengalaman", Icons.add_circle, Colors.lightBlue),
+  ItemHomepage("Logout", Icons.logout, Colors.lightBlueAccent),
 ];
 
 class ItemHomepage {
@@ -42,6 +44,13 @@ class ItemCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const ProjectFormPage()),
+            );
+          } else if (item.name == "Tambah Pengalaman") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ExperienceFormPage(),
+              ),
             );
           }
         },
