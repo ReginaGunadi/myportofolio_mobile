@@ -81,8 +81,54 @@ Untuk selengkapnya dapat dilihat di:
 - https://share.gemini.google/hCLzQAQSv6RD
 </div>
 
+
 ### Tugas 8
 <div align = "justify">
 
-1. 
+1. Perbedaan antara Navigator.push(), Navigator.pushReplacement(), dan Navigator.pop() adalah: 
+- Navigator.push() : menambahkan suatu route ke dalam stack route yang ada di Navigator. Method push() akan menambahkan route ke paling atas stack. 
+- Navigator.pushReplacement() : menghapus route yang berada di paling atas stack (yang ditampilkan ke pengguna) lalu menggantinya dengan suatu route lain. 
+- Navigator.pop() : mengeluarkan suatu route dari stack route yang ada di Navigator. Method pop() akan mengeluarkan route dari paling atas stack, sehingga halaman yang ditampilkan adalah halaman yang ada di bawah route yang dipop. 
+
+Metode yang digunakan untuk membuka formulir dari kartu aksi adalah Navigator.push(), karena kita ingin menambahkan routing halaman formulir tersendiri, lalu nanti bila pengguna menekan tombol Cancel, maka Navigator akan dipop. Sementara opsi Home di drawer membawa pengguna kembali ke halaman utama dengan menggunakan Navigator.pushReplacement(). Alurnya adalah pengguna sedang berada di halaman manapun, lalu ia membuka drawer dan mengklik home, maka routing paling atas di stack akan diubah menjadi route ke halaman Home. 
+
+Keputusan desain ini dilakukan karena: 
+Misal kita anggap stack Navigator tidak kosong dan ada isinya. 
+- Saat kita ingin mengisi form, lalu kita tidak jadi melakukannya, maka kita ingin kembali ke kondisi terakhir sebelumnya --> maka kita gunakan push dan pop.  
+- Saat kita ingin ke halaman Home, maka kita tidak ingin melihat halaman yang sekarang lagi sehingga tidak perlu menyimpannya di stack, sedangkan halaman yang ada di bawahnya punya kemungkinan untuk dikunjungi lagi nanti, jadi kita gunakan pushReplacement.
+
+
+2. Susunan Scaffold, AppBar, dan Drawer membantu menjaga struktur halaman tetap konsisten dengan cara: 
+- Untuk Scaffold dan AppBar: merupakan layout yang disediakan Flutter untuk menyusun suatu halaman agar terorganisir secara rapi. Setiap halaman punya kerangka dan judul di bagian atas yang sama (AppBar), sehingga tetap konsisten.
+- Untuk drawer: karena left drawer berada pada file tersendiri, maka tinggal dilakukan import dan digunakan pada halaman-halaman yang membutuhkan drawer. 
+
+Penggunaan warna tema portofolio di lebih dari satu halaman: 
+Pada main.dart, warna primary dideklarasikan sebagai Colors.indigo. Halaman menu.dart dan halaman form lalu mengambil warna tersebut melalui Theme.of(context).colorScheme.primary, sehingga semua halaman memakai warna yang sama dan perubahan warna cukup dilakukan di satu tempat (main.dart).
+
+
+3. Saya mengasumsikan kata "tersebut" merujuk pada pertanyaan nomor 2. Scaffold adalah widget layout bawaan Flutter yang menyediakan struktur dasar halaman, dengan komponen seperti appBar, drawer, dan body. Scaffold digunakan karena struktur halaman disediakan (framework), sehingga kita tidak perlu mengatur layout dari nol. AppBar digunakan untuk menampilkan judul halaman, sedangkan Drawer digunakan sebagai navigator antar halaman. Untuk pengaturan jarak, setiap input dibungkus oleh widget Padding dengan padding: const EdgeInsets.all(8.0) agar ada jarak antar input. Untuk menangani layar yang terbatas, digunakan SingleChildScrollView. Jika jumlah input banyak atau ruang layar tidak cukup, form tetap bisa discroll ke bawah dan tidak keluar batas.
+
+
+4. Peran GlobalKey Formstate adalah untuk mengakses state dari Form sehingga kita dapat menjalankan validasi pada seluruh input langsung sekaligus dengan memanggil fungsi validate() saat tombol Simpan ditekan. Fungsi validate() akan menjalankan validator pada setiap widget input. Contoh nilai yang ditolak oleh validasi adalah string kosong atau string yang hanya berisi spasi. Secara tipe data memang string, namun tidak punya isi yang dapat digunakan. Memilih jenis input atau papan ketik saja belum cukup karena jenis input hanya membatasi tipe data yang diinput. Contoh, pada input umur yang meminta input angka, pengguna tetap bisa memasukkan 300. Nilainya memang angka, tetapi secara konteks tidak masuk akal, sehingga tetap perlu validator untuk membatasi input angkanya agar masih dalam konteks wajar.
+
+
+### Setup Mingguan
+Pada minggu ini saya melakukan: 
+1. Menambahkan form untuk Experience + navigasi ke form tersebut
+2. Menambahkan button cancel pada halaman form
+
+
+### AI Disclosure
+Pada minggu ini, saya menggunakan AI sebagai teman debugging dan tutor. 
+Strategi prompting yang saya gunakan adalah: 
+- Saya cari dulu di Google dan Youtube bagaimana menerapkan suatu hal, contoh: showDatePicker(). Lalu saya implementasikan sesuai apa yang telah dipahami. Saat error, saya meminta AI untuk menjelaskan error dan kemungkinan penyebabnya. Berdasarkan feedback dari AI, saya melakukan perbaikan. Apabila masih error, maka saya jelaskan apa yang telah dilakukan dan meminta AI menjelaskan kembali. 
+- Saya juga menggunakan AI sebagai tutor. Setelah membaca documentation Futter, saya kurang paham sehingga saya meminta AI untuk menjelaskan kembali. 
+
+
+### Kekurangan AI: 
+Untuk minggu ini, saya tidak menemukan kekurangan AI yang cukup signifikan. AI mampu menjawab dengan cukup baik walau konteksnya kurang lengkap karena saya hanya mengirimkan potongan kode. 
+
+Untuk selengkapnya dapat dilihat di: 
+https://share.gemini.google/gsoOpNmQFi8R
+
 </div>

@@ -32,7 +32,7 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text('Add Project Form')),
-        backgroundColor: Colors.indigo,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
       ),
       // TODO: Tambahkan drawer yang sudah dibuat di sini
@@ -167,7 +167,9 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
                   children: [
                     ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.all(Colors.indigo),
+                        backgroundColor: WidgetStateProperty.all(
+                          Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {

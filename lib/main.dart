@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.indigo,
           brightness: Brightness.light,
+          primary: Colors.indigo,
           secondary: Colors.amber[700],
         ),
         useMaterial3: true,
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.indigo,
           brightness: Brightness.dark,
+          primary: Colors.indigo,
           secondary: Colors.amber[700],
         ),
         useMaterial3: true,
