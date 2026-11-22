@@ -80,3 +80,9 @@ Untuk selengkapnya dapat dilihat di:
 - https://share.gemini.google/0Xq0sNi9xMDR
 - https://share.gemini.google/hCLzQAQSv6RD
 </div>
+
+### Tugas 8
+<div align = "justify">
+
+1. 
+</div>
