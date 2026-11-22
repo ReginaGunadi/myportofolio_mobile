@@ -226,61 +226,81 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
                 ),
               ),
 
-              // === Tombol Simpan ===
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(Colors.indigo),
-                    ),
-                    onPressed: () {
-                      if (_formKey.currentState!.validate() &&
-                          !_isEndBeforeStart) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text(
-                                'Pengalaman berhasil ditambahkan!',
-                              ),
-                              content: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Nama Pengalaman: $_experienceName'),
-                                    Text('Deskripsi: $_description'),
-                                    Text('Kategori: $_category'),
-                                    Text(
-                                      'Tanggal Mulai: ${_experienceStart.day}-${_experienceStart.month}-${_experienceStart.year}',
-                                    ),
-                                    Text(
-                                      'Tanggal Selesai: ${_experienceEnd.day}-${_experienceEnd.month}-${_experienceEnd.year}',
-                                    ),
-                                    Text('Tautan: $_experienceLink'),
-                                  ],
+              // === Tombol Simpan dan Cancel ===
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(Colors.indigo),
+                      ),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate() &&
+                            !_isEndBeforeStart) {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text(
+                                  'Pengalaman berhasil ditambahkan!',
                                 ),
-                              ),
-                              actions: [
-                                TextButton(
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    _formKey.currentState!.reset();
-                                  },
+                                content: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Nama Pengalaman: $_experienceName'),
+                                      Text('Deskripsi: $_description'),
+                                      Text('Kategori: $_category'),
+                                      Text(
+                                        'Tanggal Mulai: ${_experienceStart.day}-${_experienceStart.month}-${_experienceStart.year}',
+                                      ),
+                                      Text(
+                                        'Tanggal Selesai: ${_experienceEnd.day}-${_experienceEnd.month}-${_experienceEnd.year}',
+                                      ),
+                                      Text('Tautan: $_experienceLink'),
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            );
-                          },
-                        );
-                      }
-                    },
-                    child: const Text(
-                      "Save",
-                      style: TextStyle(color: Colors.white),
+                                actions: [
+                                  TextButton(
+                                    child: const Text('OK'),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      _formKey.currentState!.reset();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      },
+                      child: const Text(
+                        "Save",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
-                  ),
+
+                    const SizedBox(width: 16),
+
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(
+                          Colors.redAccent,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        "Cancel",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
