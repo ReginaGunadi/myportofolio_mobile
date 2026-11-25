@@ -1,10 +1,14 @@
 import 'package:material_ui/material_ui.dart';
-import 'package:myportofolio_mobile/screens/project_form.dart';
+import 'package:myportofolio_mobile/screens/award_form.dart';
+import 'package:myportofolio_mobile/screens/award_list_screen.dart';
 import 'package:myportofolio_mobile/screens/experience_form.dart';
+import 'package:myportofolio_mobile/widgets/auth_guard.dart';
+import 'package:myportofolio_mobile/services/auth_state.dart';
+import 'package:provider/provider.dart';
 
 final List<ItemHomepage> items = [
-  ItemHomepage("Lihat Proyek", Icons.folder, Colors.indigo),
-  ItemHomepage("Tambah Proyek", Icons.add_circle, Colors.indigoAccent),
+  ItemHomepage("Lihat Penghargaan", Icons.folder, Colors.indigo),
+  ItemHomepage("Tambah Penghargaan", Icons.add_circle, Colors.indigoAccent),
   ItemHomepage("Tambah Pengalaman", Icons.add_circle, Colors.lightBlue),
   ItemHomepage("Logout", Icons.logout, Colors.lightBlueAccent),
 ];
@@ -30,9 +34,11 @@ class ItemCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         // Aksi ketika kartu ditekan oleh pengguna.
-        onTap: () {
+        onTap: () async {
+          final messenger = ScaffoldMessenger.of(context);
+
           // Menampilkan SnackBar dengan pesan interaktif.
-          ScaffoldMessenger.of(context)
+          messenger
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(
@@ -40,11 +46,20 @@ class ItemCard extends StatelessWidget {
               ),
             );
 
-          if (item.name == "Tambah Proyek") {
+          if (item.name == "Lihat Penghargaan") {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ProjectFormPage()),
+              MaterialPageRoute(builder: (context) => const AwardListScreen()),
             );
+          } else if (item.name == "Tambah Penghargaan") {
+            final ok = await ensureLoggedIn(context);
+            if (!context.mounted) return;
+            if (ok) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AwardFormPage()),
+              );
+            }
           } else if (item.name == "Tambah Pengalaman") {
             Navigator.push(
               context,
@@ -52,6 +67,23 @@ class ItemCard extends StatelessWidget {
                 builder: (context) => const ExperienceFormPage(),
               ),
             );
+          } else if (item.name == "Logout") {
+            final auth = context.read<AuthState>();
+            final wasLoggedIn = auth.isLoggedIn;
+
+            if (wasLoggedIn) {
+              await auth.logout();
+            }
+
+            messenger
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(
+                    wasLoggedIn ? "Kamu berhasil logout." : "Kamu belum login.",
+                  ),
+                ),
+              );
           }
         },
         child: Container(

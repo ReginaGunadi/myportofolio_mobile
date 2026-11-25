@@ -1,41 +1,106 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:myportofolio_mobile/models/award.dart';
+import 'package:myportofolio_mobile/services/api_client.dart';
+import 'package:myportofolio_mobile/services/auth_state.dart';
 import 'package:myportofolio_mobile/widgets/left_drawer.dart';
+import 'package:myportofolio_mobile/widgets/auth_guard.dart';
+import 'package:provider/provider.dart';
 
-// TODO: Impor drawer yang sudah dibuat sebelumnya
-
-class ProjectFormPage extends StatefulWidget {
-  const ProjectFormPage({super.key});
+class AwardFormPage extends StatefulWidget {
+  const AwardFormPage({super.key});
 
   @override
-  State<ProjectFormPage> createState() => _ProjectFormPageState();
+  State<AwardFormPage> createState() => _AwardFormPageState();
 }
 
-class _ProjectFormPageState extends State<ProjectFormPage> {
+class _AwardFormPageState extends State<AwardFormPage> {
   final _formKey = GlobalKey<FormState>();
 
-  String _projectName = "";
+  String _awardName = "";
   String _description = "";
-  String _category = "Web Development"; // default
-  String _technologies = "";
-  String _projectLink = "";
+  String _category = "Tech"; // default
+  String _awardLink = "";
 
-  final List<String> _categories = [
-    'Web Development',
-    'Mobile Development',
-    'Machine Learning',
-    'Data Science',
-    'Other',
-  ];
+  final List<String> _categories = ['Tech', 'Math', 'Music', 'Other'];
+
+  bool _isValidUrl(String value) {
+    final uri = Uri.tryParse(value.trim());
+    return uri != null &&
+        (uri.scheme == 'http' || uri.scheme == 'https') &&
+        uri.host.isNotEmpty;
+  }
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    final ok = await ensureLoggedIn(context);
+    if (!mounted || !ok) return;
+
+    final auth = context.read<AuthState>();
+    final token = auth.token;
+    if (token == null) return;
+
+    final newAward = Award(
+      title: _awardName.trim(),
+      description: _description.trim(),
+      category: _category.toLowerCase(),
+      image: _awardLink.trim(),
+    );
+
+    try {
+      await context.read<ApiClient>().createAward(newAward, token: token);
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Penghargaan berhasil ditambahkan!'),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Nama Penghargaan: ${newAward.title}'),
+                Text('Deskripsi: ${newAward.description}'),
+                Text('Kategori: ${newAward.category}'),
+                Text('Tautan: ${newAward.image}'),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.pop(context);
+                _formKey.currentState!.reset();
+              },
+            ),
+          ],
+        ),
+      );
+    } on ApiException catch (e) {
+      if (!mounted) return;
+      if (e.statusCode == 401) {
+        await auth.logout();
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Sesi berakhir. Silakan login ulang.')),
+        );
+        await ensureLoggedIn(context);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Gagal menyimpan (${e.statusCode}).')),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Add Project Form')),
+        title: const Center(child: Text('Add Award Form')),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
       ),
-      // TODO: Tambahkan drawer yang sudah dibuat di sini
       drawer: const LeftDrawer(),
       body: Form(
         key: _formKey,
@@ -43,25 +108,25 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // === Project Name ===
+              // === Award Name ===
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    hintText: "Nama Proyek",
-                    labelText: "Nama Proyek",
+                    hintText: "Nama Penghargaan",
+                    labelText: "Nama Penghargaan",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   onChanged: (String? value) {
                     setState(() {
-                      _projectName = value!;
+                      _awardName = value!;
                     });
                   },
                   validator: (String? value) {
                     if (value == null || value.trim().isEmpty) {
-                      return "Nama proyek tidak boleh kosong!";
+                      return "Nama Penghargaan tidak boleh kosong!";
                     }
                     return null;
                   },
@@ -74,8 +139,8 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
                 child: TextFormField(
                   maxLines: 5,
                   decoration: InputDecoration(
-                    hintText: "Deskripsi Proyek",
-                    labelText: "Deskripsi Proyek",
+                    hintText: "Deskripsi Penghargaan",
+                    labelText: "Deskripsi Penghargaan",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
@@ -87,7 +152,7 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
                   },
                   validator: (String? value) {
                     if (value == null || value.trim().isEmpty) {
-                      return "Deskripsi proyek tidak boleh kosong!";
+                      return "Deskripsi Penghargaan tidak boleh kosong!";
                     }
                     return null;
                   },
@@ -99,7 +164,7 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: DropdownButtonFormField<String>(
                   decoration: InputDecoration(
-                    labelText: "Kategori Proyek",
+                    labelText: "Kategori Penghargaan",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
@@ -121,40 +186,31 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
                 ),
               ),
 
-              // === Technologies ===
+              // === Award Link ===
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  keyboardType: TextInputType.url,
                   decoration: InputDecoration(
-                    hintText: "Contoh: Flutter, Django, Figma",
-                    labelText: "Teknologi yang Digunakan",
+                    hintText: "URL Penghargaan (contoh: https://...)",
+                    labelText: "Tautan Penghargaan",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   onChanged: (String? value) {
                     setState(() {
-                      _technologies = value!;
+                      _awardLink = value!;
                     });
                   },
-                ),
-              ),
-
-              // === Project Link ===
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "URL Proyek (opsional)",
-                    labelText: "Tautan Proyek",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                  ),
-                  onChanged: (String? value) {
-                    setState(() {
-                      _projectLink = value!;
-                    });
+                  validator: (String? value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "Tautan Penghargaan tidak boleh kosong!";
+                    }
+                    if (!_isValidUrl(value)) {
+                      return "Format URL tidak valid (contoh: https://...)";
+                    }
+                    return null;
                   },
                 ),
               ),
@@ -171,42 +227,7 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
                           Theme.of(context).colorScheme.primary,
                         ),
                       ),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: const Text(
-                                  'Proyek berhasil ditambahkan!',
-                                ),
-                                content: SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text('Nama Proyek: $_projectName'),
-                                      Text('Deskripsi: $_description'),
-                                      Text('Kategori: $_category'),
-                                      Text('Teknologi: $_technologies'),
-                                      Text('Tautan: $_projectLink'),
-                                    ],
-                                  ),
-                                ),
-                                actions: [
-                                  TextButton(
-                                    child: const Text('OK'),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                      _formKey.currentState!.reset();
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        }
-                      },
+                      onPressed: _submit,
                       child: const Text(
                         "Save",
                         style: TextStyle(color: Colors.white),
