@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-
 part 'award.g.dart';
 
 /// Portfolio award synchronized with the Django REST Framework API.
