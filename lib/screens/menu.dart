@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:myportofolio_mobile/widgets/left_drawer.dart';
 import 'package:myportofolio_mobile/widgets/award_card.dart';
 
+// Testing
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
 
